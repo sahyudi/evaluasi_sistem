@@ -190,7 +190,6 @@ class Setting extends CI_Controller
         $menu = $this->input->post('menu');
         $menu_akses = $this->input->post('menu_akses');
 
-        log_r(serialize($menu_akses));
         $data_menu = [];
         foreach ($menu as $key => $value) {
             $data_menu[] = [
