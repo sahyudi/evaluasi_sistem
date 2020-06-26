@@ -15,10 +15,10 @@ class Dashboard extends CI_Controller
     public function index()
     {
         // check_persmission_pages($this->session->userdata('group_id'), 'home');
-        // $data['active'] = 'home';
+        $data['active'] = 'dashboard';
         // $data['title'] = 'Home';
-        // $data['subview'] = 'home/index';
-        // $this->load->view('template/main', $data);
-        $this->load->view('dashboard/view');
+        $data['subview'] = 'dashboard/view';
+        $this->load->view('template/main', $data);
+        // $this->load->view('', $data);
     }
 }

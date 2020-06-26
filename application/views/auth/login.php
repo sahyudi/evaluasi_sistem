@@ -29,7 +29,7 @@
                                         <!-- <form> -->
                                         <div class="form-group">
                                             <label class="small mb-1" for="inputEmailAddress">Username</label>
-                                            <input class="form-control py-4" id="email" type="text" placeholder="Enter email address" name="email" focus/>
+                                            <input class="form-control py-4" id="email" type="text" placeholder="Enter email address" name="email" focus />
                                             <?= form_error('email', '<small class="text-danger">', '</small><br>'); ?>
                                         </div>
 
@@ -52,7 +52,7 @@
                                     </form>
                                 </div>
                                 <div class="card-footer text-center">
-                                    <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
+                                    <div class="small"><a href="<?= base_url('auth/register') ?>">Need an account? Sign up!</a></div>
                                 </div>
                             </div>
                         </div>

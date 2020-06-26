@@ -1,74 +1,51 @@
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Menu</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('home') ?>">Home</a></li>
-                        <li class="breadcrumb-item active">Menu</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-12">
-                <!-- /.card -->
-                <?= $this->session->flashdata('message'); ?>
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">List Vedor</h3>
-                        <a href="#" class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#modal-menu"><i class="fas fa-fw fa-plus"></i> Add Menu</a>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr class="text-center">
-                                    <th>No</th>
-                                    <th>Parent ID</th>
-                                    <th>Title</th>
-                                    <th>Link</th>
-                                    <th>Icon</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($menu as $key => $value) { ?>
-                                    <tr>
-                                        <td class="text-center"><?= $key + 1 ?></td>
-                                        <td><?= get_parent_menu($value->parent_id) ?></td>
-                                        <td><?= $value->title ?></td>
-                                        <td><?= $value->link ?></td>
-                                        <td><?= $value->icon ?></td>
-                                        <td class="text-right">
-                                            <a href="<?= base_url('setting/deleteMenu/') . $value->id ?>" class="btn btn-xs btn-danger" onclick="return confirm_delete()"><i class="fas fa-fw fa-trash"></i></a>
-                                            <a href="#" data-id="<?= $value->id ?>" data-toggle="modal" data-target="#modal-menu" class="btn btn-xs btn-success btn-edit"><i class="fas fa-fw fa-pencil-alt"></i></a>
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
+<main>
+    <div class="container-fluid">
+        <h1 class="mb-4 mt-3">Menu</h1>
+        <!-- <ol class="breadcrumb mt-4">
+            <li class="breadcrumb-item active">Dashboard</li>
+        </ol> -->
+        <?= $this->session->flashdata('message'); ?>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table mr-1"></i>
+                Data menu
+                <a href="#" class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#modal-menu"><i class="fas fa-fw fa-plus"></i> Add Menu</a>
             </div>
-            <!-- /.col -->
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                        <thead>
+                            <tr class="text-center">
+                                <th>No</th>
+                                <th>Parent ID</th>
+                                <th>Title</th>
+                                <th>Link</th>
+                                <th>Icon</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($menu as $key => $value) { ?>
+                                <tr>
+                                    <td class="text-center"><?= $key + 1 ?></td>
+                                    <td><?= get_parent_menu($value->parent_id) ?></td>
+                                    <td><?= $value->title ?></td>
+                                    <td><?= $value->link ?></td>
+                                    <td><?= $value->icon ?></td>
+                                    <td class="text-right">
+                                        <a href="<?= base_url('setting/deleteMenu/') . $value->id ?>" class="btn btn-xs btn-danger" onclick="return confirm_delete()"><i class="fas fa-fw fa-trash"></i></a>
+                                        <a href="#" data-id="<?= $value->id ?>" data-toggle="modal" data-target="#modal-menu" class="btn btn-xs btn-success btn-edit"><i class="fas fa-fw fa-pencil-alt"></i></a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <!-- /.row -->
-    </section>
-    <!-- /.content -->
-</div>
+    </div>
+</main>
 
 <div class="modal fade" id="modal-menu">
     <div class="modal-dialog">
@@ -116,7 +93,7 @@
 </div>
 <script>
     $(document).ready(function() {
-        $("#example1").DataTable();
+        $(".table").DataTable();
         $('.select2').select2();
     });
 

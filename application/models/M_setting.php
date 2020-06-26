@@ -34,7 +34,7 @@ class M_setting extends CI_Model
 
     function get_parent_menu()
     {
-        $this->db->where('parent_id', 0);
+        $this->db->where('link', '#');
         return $this->db->get('menus');
     }
 

@@ -173,21 +173,24 @@ class Setting extends CI_Controller
 
     public function privelage($id)
     {
-        check_persmission_pages($this->session->userdata('group_id'), 'setting/group');
+        // check_persmission_pages($this->session->userdata('group_id'), 'setting/group');
 
         $data['menu'] = $this->m_setting->get_menu()->result();
+        // log_r($data);
         $data['group_id'] = $id;
-        $data['active'] = 'setting/privelage';
-        $data['title'] = 'Menu';
+        $data['active'] = 'setting/group';
+        $data['title'] = 'Privelage';
         $data['subview'] = 'setting/privelage';
         $this->load->view('template/main', $data);
     }
     function update_privelage()
     {
-        check_persmission_pages($this->session->userdata('group_id'), 'setting/group');
-
+        // check_persmission_pages($this->session->userdata('group_id'), 'setting/group');
         $group_id = $this->input->post('group_id');
         $menu = $this->input->post('menu');
+        $menu_akses = $this->input->post('menu_akses');
+
+        log_r(serialize($menu_akses));
         $data_menu = [];
         foreach ($menu as $key => $value) {
             $data_menu[] = [

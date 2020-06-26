@@ -1,83 +1,55 @@
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Privelage</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('home') ?>">Home</a></li>
-                        <li class="breadcrumb-item active">Privelage</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-12">
-                <!-- /.card -->
-                <?= $this->session->flashdata('message'); ?>
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Role Access</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <form method="POST" action="<?= base_url('setting/update_privelage') ?>">
-                        <input type="hidden" name="group_id" id="group_id" value="<?= $group_id ?>">
-                        <div class="card-body">
-                            <table class="table table-striped table-bordered tree">
-                                <!-- Loop menu -->
-                                <?php foreach ($menu as $key => $value) { ?>
-                                    <?php if ($value->parent_id == 0) { ?>
-                                        <tr>
-                                            <td><input type="checkbox" name="menu[]" id="checkbox-<?= $value->id; ?>" value="<?= $value->id; ?>" <?= check_menu($group_id, $value->id) ?>> <?= $value->title; ?></td>
+<main>
+    <div class="container-fluid">
+        <h1 class="mb-4 mt-3">Role Access</h1>
+        <!-- <ol class="breadcrumb mt-4">
+            <li class="breadcrumb-item active">Dashboard</li>
+        </ol> -->
+        <?= $this->session->flashdata('message'); ?>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table mr-1"></i>
+                Form Role Access
+            </div>
+            <form method="POST" action="<?= base_url('setting/update_privelage') ?>">
+                <input type="hidden" name="group_id" id="group_id" value="<?= $group_id ?>">
+                <div class="card-body">
+                    <table class="table table-striped table-bordered tree">
+                        <!-- Loop menu -->
+                        <tr>
+                            <th>Menu</th>
+                            <th colspan="3">Actions</th>
+                        </tr>
+                        <?php foreach ($menu as $key => $value_menu) { ?>
+                            <?php if ($value_menu->parent_id == 0) { ?>
+                                <tr>
+                                    <td><input type="checkbox" name="menu[]" id="checkbox-<?= $value_menu->id; ?>" value="<?= $value_menu->id; ?>" <?= check_menu($group_id, $value_menu->id) ?>> <?= $value_menu->title; ?></td>
+                                </tr>
+                                <!-- Loop submenu -->
+                                <?php foreach ($menu as $key => $submenu) { ?>
+                                    <?php if ($submenu->parent_id == $value_menu->id) { ?>
+                                        <tr class="m-3" style="margin-left:10%;">
+                                            <td><input class="ml-5" type="checkbox" id="checkbox-<?= $submenu->id; ?>" name="menu[]" value="<?= $submenu->id ?>" <?= check_menu($group_id, $submenu->id) ?>> <?= $submenu->title; ?></td>
+                                            <td><input class="ml-5" type="checkbox" id="read" name="menu_akses[]" value="read"> Read</td>
+                                            <td><input class="ml-5" type="checkbox" id="delete" name="menu_akses[]" value="delete"> Delete</td>
+                                            <td><input class="ml-5" type="checkbox" id="update" name="menu_akses[]" value="update"> Update</td>
                                         </tr>
-                                        <!-- Loop submenu -->
-                                        <?php foreach ($menu as $key => $submenu) { ?>
-                                            <?php if ($submenu->parent_id == $value->id) { ?>
-                                                <tr class="m-3" style="margin-left:10%;">
-                                                    <td><input class="ml-5" type="checkbox" id="checkbox-<?= $submenu->id; ?>" name="menu[]" value="<?= $submenu->id ?>" <?= check_menu($group_id, $submenu->id) ?>> <?= $submenu->title; ?></td>
-                                                </tr>
-                                            <?php } ?>
-                                        <?php } ?>
                                     <?php } ?>
                                 <?php } ?>
-                            </table>
-                        </div>
-                        <div class="card-footer">
-                            <button type="button" onclick="button_back()" class="btn btn-danger btn-sm float-left">Back</button>
-                            <button type="submit" class="btn btn-primary btn-sm float-right">Save Changes</button>
-                        </div>
-                    </form>
-                    <!-- /.card-body -->
+                            <?php } ?>
+                        <?php } ?>
+                    </table>
                 </div>
-                <!-- /.card -->
-            </div>
-            <!-- /.col -->
+                <div class="card-footer mb-5">
+                    <button type="button" onclick="button_back()" class="btn btn-danger btn-sm float-left">Back</button>
+                    <button type="submit" class="btn btn-primary btn-sm float-right">Save Changes</button>
+                </div>
+            </form>
         </div>
-        <!-- /.row -->
-    </section>
-    <!-- /.content -->
-</div>
-
+    </div>
+</main>
 <script>
     $(document).ready(function() {
         $("#example1").DataTable();
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-        });
     });
 
     function confirm_delete() {

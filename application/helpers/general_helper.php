@@ -42,7 +42,7 @@ function check_persmission_pages($id_group, $link)
         if ($CI->session->userdata('group_id') == 3) {
             redirect('pos');
         } else {
-            redirect('home');
+            redirect('dashboard');
         }
     }
 }
