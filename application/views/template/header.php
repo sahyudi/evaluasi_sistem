@@ -15,9 +15,6 @@
     <script src="<?= base_url() ?>assets/dist/js/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
     <script src="<?= base_url() ?>assets/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="<?= base_url() ?>assets/dist/js/scripts.js"></script>
-    <script src="<?= base_url() ?>assets/dist/js/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="<?= base_url() ?>assets/dist/assets/demo/chart-area-demo.js"></script>
-    <script src="<?= base_url() ?>assets/dist/assets/demo/chart-bar-demo.js"></script>
     <script src="<?= base_url() ?>assets/dist/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="<?= base_url() ?>assets/dist/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
     <script src="<?= base_url() ?>assets/dist/assets/demo/datatables-demo.js"></script>

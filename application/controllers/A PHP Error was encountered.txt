@@ -1,0 +1,35 @@
+A PHP Error was encountered
+Severity: Notice
+
+Message: Trying to get property 'id' of non-object
+
+Filename: template/sidebar.php
+
+Line Number: 22
+
+Backtrace:
+
+File: C:\laragon\www\evaluasi\application\views\template\sidebar.php
+Line: 22
+Function: _error_handler
+
+File: C:\laragon\www\evaluasi\application\views\template\main.php
+Line: 3
+Function: view
+
+File: C:\laragon\www\evaluasi\application\controllers\Setting.php
+Line: 184
+Function: view
+
+File: C:\laragon\www\evaluasi\index.php
+Line: 315
+Function: require_once
+
+collapsed" href="#" data-toggle="collapse" data-target="#Setting-0" aria-expanded="false" aria-controls="Setting-0">
+Setting
+" id="Setting-0" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+Menu
+Users
+User Groups
+Role Access
+ Form Role Access

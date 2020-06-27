@@ -25,7 +25,7 @@
                             <?php if (check_persmission_views($this->session->userdata('group_id'), $m->id)) { ?>
                                 <?php if ($m->link == '#' || $m->link == '') {  ?>
 
-                                    <a class="nav-link <?= ($active_parent->id != $m->id) ? 'collapsed' : 'active' ?>" href="#" data-toggle="collapse" data-target="#<?= $value->name . '-' . $k ?>" aria-expanded="false" aria-controls="<?= $value->name . '-' . $k ?>">
+                                    <a class="nav-link <?= ($active_parent->id != $m->id) ? 'collapsed' : '' ?>" href="#" data-toggle="collapse" data-target="#<?= $value->name . '-' . $k ?>" aria-expanded="false" aria-controls="<?= $value->name . '-' . $k ?>">
                                         <div class="sb-nav-link-icon"><i class="fas <?= $m->icon ?>"></i></div>
                                         <?= $m->title ?>
                                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>

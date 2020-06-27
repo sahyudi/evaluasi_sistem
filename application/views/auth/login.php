@@ -8,8 +8,8 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Login - Evaluasi</title>
-    <link href="<?= base_url() ?>dist/css/styles.css" rel="stylesheet" />
-    <script src="<?= base_url() ?>dist/js/all.min.js" crossorigin="anonymous"></script>
+    <link href="<?= base_url() ?>assets/dist/css/styles.css" rel="stylesheet" />
+    <script src="<?= base_url() ?>assets/dist/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="bg-primary">
@@ -75,9 +75,9 @@
             </footer>
         </div>
     </div>
-    <script src="<?= base_url() ?>dist/js/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
-    <script src="<?= base_url() ?>dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="<?= base_url() ?>dist/js/scripts.js"></script>
+    <script src="<?= base_url() ?>assets/dist/js/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="<?= base_url() ?>assets/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="<?= base_url() ?>assets/dist/js/scripts.js"></script>
 </body>
 
 </html>
