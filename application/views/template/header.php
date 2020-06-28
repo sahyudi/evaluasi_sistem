@@ -23,6 +23,9 @@
     <link href="<?= base_url('assets/plugins/select2-3.5.3/select2.css') ?>" rel="stylesheet" />
     <link href="<?= base_url('assets/plugins/select2-3.5.3/select2-bootstrap.css') ?>" rel="stylesheet" />
     <script src="<?= base_url('assets/plugins/select2-3.5.3/select2.min.js') ?>"></script>
+
+    <!-- sweetalert -->
+    <script src="<?= base_url('assets/plugins/sweetalert2/sweetalert2@9.js') ?>"></script>
 </head>
 
 <body class="sb-nav-fixed">

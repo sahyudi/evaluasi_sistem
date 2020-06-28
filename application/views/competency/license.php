@@ -28,19 +28,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <?php foreach ($menu as $key => $value) { ?>
-                                <tr>
-                                    <td class="text-center"><?= $key + 1 ?></td>
-                                    <td><?= get_parent_menu($value->parent_id) ?></td>
-                                    <td><?= $value->title ?></td>
-                                    <td><?= $value->link ?></td>
-                                    <td><?= $value->icon ?></td>
-                                    <td class="text-right">
-                                        <a href="<?= base_url('setting/deleteMenu/') . $value->id ?>" class="btn btn-xs btn-danger" onclick="return confirm_delete()"><i class="fas fa-fw fa-trash"></i></a>
-                                        <a href="#" data-id="<?= $value->id ?>" data-toggle="modal" data-target="#modal-menu" class="btn btn-xs btn-success btn-edit"><i class="fas fa-fw fa-pencil-alt"></i></a>
-                                    </td>
-                                </tr>
-                            <?php } ?> -->
+
                         </tbody>
                     </table>
                 </div>

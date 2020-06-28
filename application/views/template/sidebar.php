@@ -8,7 +8,7 @@
                     $this->db->order_by('sort_by', 'asc');
                     $main =  $this->db->get('heading_menu')->result();
                     $active_parent = $this->db->get_where('menus', ['link' => $active])->row();
-                    // log_r($active_parent);
+                    // log_r($this->db->last_query());
                     ?>
                     <?php foreach ($main as $key => $value) { ?>
                         <?php
