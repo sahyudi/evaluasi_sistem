@@ -15,6 +15,11 @@ class Competency extends CI_Controller
         $this->load->model('competency_');
     }
 
+    function index()
+    {
+        redirect('competency/license');
+    }
+
     public function license()
     {
         check_persmission_pages($this->session->userdata('group_id'), 'competency/license');
@@ -35,6 +40,17 @@ class Competency extends CI_Controller
         $data['title'] = 'Unit Competency';
         $data['subview'] = 'competency/unit_competency';
         $this->load->view('template/main', $data);
+    }
+
+    function unit_detail($id)
+    {
+        if ($id) {
+            $data['competency'] = $this->competency_->getUnitCompetency($id)->row();
+            $data['active'] = 'competency/unit_competency';
+            $data['title'] = 'Unit Detail';
+            $data['subview'] = 'competency/unit_detail';
+            $this->load->view('template/main', $data);
+        }
     }
 
     function getJsonUnitComp()

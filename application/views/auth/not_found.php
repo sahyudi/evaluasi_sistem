@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>404 Error - SB Admin</title>
+    <title>404 Error</title>
     <link href="<?= base_url() ?>assets/dist/css/styles.css" rel="stylesheet" />
     <script src="<?= base_url() ?>assets/dist/js/all.min.js" crossorigin="anonymous"></script>
 </head>
@@ -22,7 +22,7 @@
                             <div class="text-center mt-4">
                                 <img class="mb-4 img-error" src="<?= base_url() ?>assets/dist/assets/img/error-404-monochrome.svg" />
                                 <p class="lead">This requested URL was not found on this server.</p>
-                                <a href="<?= base_url() ?>">
+                                <a href="#" onclick="window.history.back()">
                                     <i class="fas fa-arrow-left mr-1"></i>
                                     Return to Dashboard
                                 </a>

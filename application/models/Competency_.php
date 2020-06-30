@@ -2,6 +2,7 @@
 
 class Competency_ extends CI_Model
 {
+    // public
 
     function __construct()
     {
@@ -25,5 +26,10 @@ class Competency_ extends CI_Model
         $this->datatables->select('id, name, min_score');
         $this->datatables->from('comp_unit');
         return $this->datatables->generate();
+    }
+
+    function getUnitCompetency($id)
+    {
+        return $this->db->get_where('comp_unit', ['id' => $id]);
     }
 }

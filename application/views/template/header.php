@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Dashboard - Evaluasi</title>
+    <title><?= $title ?> - Evaluasi</title>
     <link rel="icon" href="fav/icon" type="image/gif" sizes="16x16">
     <link href="<?= base_url() ?>assets/dist/css/styles.css" rel="stylesheet" />
     <link href="<?= base_url() ?>assets/dist/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />

@@ -228,9 +228,9 @@
                     "className": "text-center",
                     "render": function(data, type, oObj) {
                         var id = oObj['id'];
-                        var btnDelete = `<button onclick="delete_unit(${id})" class="btn btn-delete"><i class="fas fa-fw fa-trash"></i></button>`;
-                        var btnEdit = `<a href="#" data-toggle="modal" data-target="#modal-unit-comptency" onclick="edit_unit(${id})" class="btn btn-print"><i class="fas fa-fw fa-pencil-alt"></i></a>`;
-                        var btnCertif = `<a href="#" class="btn btn-certif"><i class="fas fa-fw fa-file"></i></a>`;
+                        var btnDelete = `<button onclick="delete_unit(${id})" title="Detele" class="btn btn-delete"><i class="fas fa-fw fa-trash"></i></button>`;
+                        var btnEdit = `<a href="#" data-toggle="modal" title="Edit" data-target="#modal-unit-comptency" onclick="edit_unit(${id})" class="btn btn-print"><i class="fas fa-fw fa-pencil-alt"></i></a>`;
+                        var btnCertif = `<a href="<?= base_url('competency/unit_detail/') ?>${id}" class="btn btn-certif" title="Criteria detail"><i class="fas fa-fw fa-file"></i></a>`;
                         return `<td class="text-center">${btnDelete} ${btnEdit} ${btnCertif}</right>`;
                     }
                 }
