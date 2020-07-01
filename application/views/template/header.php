@@ -26,6 +26,7 @@
 
     <!-- sweetalert -->
     <script src="<?= base_url('assets/plugins/sweetalert2/sweetalert2@9.js') ?>"></script>
+
 </head>
 
 <body class="sb-nav-fixed">

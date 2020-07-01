@@ -5,6 +5,7 @@ class Competency extends CI_Controller
 {
 
     public $unit_comptency = 'comp_unit';
+    public $unit_comp_detail = 'comp_unit_criteria';
 
     public function __construct()
     {
@@ -56,6 +57,58 @@ class Competency extends CI_Controller
     function getJsonUnitComp()
     {
         echo $this->competency_->getJsonUnitComp();
+    }
+
+    function get_detail_competency()
+    {
+        $id = $this->input->post('id');
+        $data = $this->competency_->get_unit_detail($id)->result();
+        echo json_encode($data);
+    }
+
+    function saveUnitDetailCompetency($id_comp_unit)
+    {
+        $id = $this->input->post('id');
+        $data = [
+            'comp_unit_id' => $id_comp_unit,
+            'name' => $this->input->post('criteria'),
+            'value_weight' => $this->input->post('value_weight')
+        ];
+
+        if ($id) {
+            $data['updated_at'] = date('Y-m-d H:i:s');
+            $this->db->update($this->unit_comp_detail, $data, ['id' => $id]);
+        } else {
+            $data['created_at'] = date('Y-m-d H:i:s');
+            $this->db->insert($this->unit_comp_detail, $data);
+        }
+
+        echo json_encode(['status' => 1]);
+    }
+
+    function deleteUnitCompDetail()
+    {
+        $id = $this->input->post('id');
+
+        if ($id) {
+            $this->db->delete($this->unit_comp_detail, ['id' => $id]);
+            $status = 1;
+        } else {
+            $status = 2;
+        }
+
+        echo json_encode(['status' => $status]);
+    }
+
+    function editUnitCompDetail()
+    {
+        $id = $this->input->post('id');
+
+        if ($id) {
+            $data = $this->db->get_where($this->unit_comp_detail, ['id' => $id])->row();
+        }
+
+        echo json_encode($data);
     }
 
     function saveUnitCompetency()

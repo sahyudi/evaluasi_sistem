@@ -2,7 +2,8 @@
 
 class Competency_ extends CI_Model
 {
-    // public
+    public $competency_unit = 'comp_unit';
+    public $comp_unit_detail = 'comp_unit_criteria';
 
     function __construct()
     {
@@ -24,12 +25,17 @@ class Competency_ extends CI_Model
     function getJsonUnitComp()
     {
         $this->datatables->select('id, name, min_score');
-        $this->datatables->from('comp_unit');
+        $this->datatables->from($this->competency_unit);
         return $this->datatables->generate();
     }
 
     function getUnitCompetency($id)
     {
         return $this->db->get_where('comp_unit', ['id' => $id]);
+    }
+
+    function get_unit_detail($id = null)
+    {
+        return $this->db->get_where($this->comp_unit_detail, ['comp_unit_id' => $id]);
     }
 }

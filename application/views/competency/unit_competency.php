@@ -77,7 +77,6 @@
     }
 
     function save_data() {
-
         $.ajax({
             url: "<?= base_url() . 'competency/saveUnitCompetency'; ?>",
             async: false,
@@ -123,8 +122,6 @@
                 execute_delete(id)
             }
         })
-
-
     }
 
     function execute_delete(id) {
