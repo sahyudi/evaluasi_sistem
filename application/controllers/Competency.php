@@ -37,14 +37,67 @@ class Competency extends CI_Controller
 
     function unit_competency()
     {
+        check_persmission_pages($this->session->userdata('group_id'), 'competency/unit_competency');
         $data['active'] = 'competency/unit_competency';
         $data['title'] = 'Unit Competency';
         $data['subview'] = 'competency/unit_competency';
         $this->load->view('template/main', $data);
     }
 
+
+    function getJsonUnitComp()
+    {
+        echo $this->competency_->getJsonUnitComp();
+    }
+
+    function saveUnitCompetency()
+    {
+        $id = $this->input->post('id');
+
+        $data = [
+            'name' => $this->input->post('name'),
+            'min_score' => $this->input->post('min_score')
+        ];
+
+        if ($id) {
+            $data['updated_at'] = date('Y-m-d H:i:s');
+            $this->db->update($this->unit_comptency, $data, ['id' => $id]);
+        } else {
+            $data['created_at'] = date('Y-m-d H:i:s');
+            $this->db->insert($this->unit_comptency, $data);
+        }
+
+        echo json_encode(['status' => 1]);
+    }
+
+    function deleteUnitCompetency()
+    {
+        $id = $this->input->post('id');
+
+        if ($id) {
+            $this->db->delete($this->unit_comptency, ['id' => $id]);
+            $status = 1;
+        } else {
+            $status = 2;
+        }
+
+        echo json_encode(['status' => $status]);
+    }
+
+    function editUnitCompetency()
+    {
+        $id = $this->input->post('id');
+
+        if ($id) {
+            $data = $this->db->get_where($this->unit_comptency, ['id' => $id])->row();
+        }
+
+        echo json_encode($data);
+    }
+
     function unit_detail($id)
     {
+        check_persmission_pages($this->session->userdata('group_id'), 'competency/unit_competency');
         if ($id) {
             $data['competency'] = $this->competency_->getUnitCompetency($id)->row();
             $data['active'] = 'competency/unit_competency';
@@ -52,11 +105,6 @@ class Competency extends CI_Controller
             $data['subview'] = 'competency/unit_detail';
             $this->load->view('template/main', $data);
         }
-    }
-
-    function getJsonUnitComp()
-    {
-        echo $this->competency_->getJsonUnitComp();
     }
 
     function get_detail_competency()
@@ -111,48 +159,12 @@ class Competency extends CI_Controller
         echo json_encode($data);
     }
 
-    function saveUnitCompetency()
+    function form()
     {
-        $id = $this->input->post('id');
-
-        $data = [
-            'name' => $this->input->post('name'),
-            'min_score' => $this->input->post('min_score')
-        ];
-
-        if ($id) {
-            $data['updated_at'] = date('Y-m-d H:i:s');
-            $this->db->update($this->unit_comptency, $data, ['id' => $id]);
-        } else {
-            $data['created_at'] = date('Y-m-d H:i:s');
-            $this->db->insert($this->unit_comptency, $data);
-        }
-
-        echo json_encode(['status' => 1]);
-    }
-
-    function deleteUnitCompetency()
-    {
-        $id = $this->input->post('id');
-
-        if ($id) {
-            $this->db->delete($this->unit_comptency, ['id' => $id]);
-            $status = 1;
-        } else {
-            $status = 2;
-        }
-
-        echo json_encode(['status' => $status]);
-    }
-
-    function editUnitCompetency()
-    {
-        $id = $this->input->post('id');
-
-        if ($id) {
-            $data = $this->db->get_where($this->unit_comptency, ['id' => $id])->row();
-        }
-
-        echo json_encode($data);
+        check_persmission_pages($this->session->userdata('group_id'), 'competency/form');
+        $data['active'] = 'competency/form';
+        $data['title'] = 'Form EvaluationCompetency';
+        $data['subview'] = 'competency/form';
+        $this->load->view('template/main', $data);
     }
 }

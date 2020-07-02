@@ -63,7 +63,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-12">
-                            <button type="button" onclick="button_back()" class="btn btn-danger btn-sm">Back</button>
+                            <button type="button" onclick="window.history.back();" class="btn btn-danger btn-sm">Back</button>
                             <button type="submit" class="btn btn-primary btn-sm float-right">Register</button>
                         </div>
                     </div>

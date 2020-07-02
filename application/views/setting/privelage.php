@@ -40,7 +40,7 @@
                     </table>
                 </div>
                 <div class="card-footer mb-5">
-                    <button type="button" onclick="button_back()" class="btn btn-danger btn-sm float-left">Back</button>
+                    <button type="button" onclick="window.history.back();" class="btn btn-danger btn-sm float-left">Back</button>
                     <button type="submit" class="btn btn-primary btn-sm float-right">Save Changes</button>
                 </div>
             </form>
