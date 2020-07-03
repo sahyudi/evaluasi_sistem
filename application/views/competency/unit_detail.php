@@ -6,6 +6,7 @@
             <div class="card-header">
                 <i class="fas fa-table mr-1"></i>
                 Data Unit Competency Detail
+                <a href="<?= base_url('competency/unit_competency') ?>" class="btn btn-danger float-right btn-sm ml-2"><i class="fas fa-fw fa-back"></i> Back</a>
                 <a href="#" onclick="reset_form()" class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#modal-unit-comptency-detail"><i class="fas fa-fw fa-plus"></i> Add Unit Competency</a>
             </div>
             <div class="card-body">
@@ -207,6 +208,7 @@
                 // console.log(data);
                 $('tbody tr').remove()
                 $.each(data, function(index, unit) {
+                    // console.log(index)
                     unitData += `
                         <tr>
                             <td>${unit.name}</td>

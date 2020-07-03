@@ -56,7 +56,8 @@ class Competency extends CI_Controller
 
         $data = [
             'name' => $this->input->post('name'),
-            'min_score' => $this->input->post('min_score')
+            'min_score' => $this->input->post('min_score'),
+            'duration' => $this->input->post('duration')
         ];
 
         if ($id) {
@@ -162,9 +163,34 @@ class Competency extends CI_Controller
     function form()
     {
         check_persmission_pages($this->session->userdata('group_id'), 'competency/form');
+        $this->load->model('hrms_');
+
+        $data['employee'] = $this->hrms_->getEmployee()->result();
+        $data['userAccess'] = $this->hrms_->getUserAccess()->result();
+        $data['UniComp'] = $this->competency_->getUnitComp()->result();
+
         $data['active'] = 'competency/form';
         $data['title'] = 'Form EvaluationCompetency';
         $data['subview'] = 'competency/form';
         $this->load->view('template/main', $data);
+    }
+
+    function getEmployee()
+    {
+        $employee_id = $this->input->post('employeeId');
+
+        $this->load->model('hrms_');
+
+        $data = $this->hrms_->getEmployee($employee_id)->row();
+
+        echo json_encode($data);
+    }
+
+    function getCriteriaComp()
+    {
+        $compId = $this->input->post('compId');
+
+        $data = $this->db->get_where($this->unit_comp_detail, ['comp_unit_id' => $compId])->result();
+        echo json_encode($data);
     }
 }

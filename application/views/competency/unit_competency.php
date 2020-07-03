@@ -15,6 +15,7 @@
                             <tr class="text-center">
                                 <th>No</th>
                                 <th>Nama</th>
+                                <th>Duration (years)</th>
                                 <th>Min Score</th>
                                 <th>Actions</th>
                             </tr>
@@ -44,6 +45,10 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Name</label>
                         <input type="text" name="name" id="name" class="form-control form-control-sm" placeholder="Name unit competency">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Duartion</label>
+                        <input type="text" name="duration" id="duration" class="form-control form-control-sm" placeholder="Minimal score">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Minimal Score</label>
@@ -168,6 +173,7 @@
             success: function(data) {
                 $('#id').val(data.id);
                 $('#name').val(data.name);
+                $('#duration').val(data.duration);
                 $('#min_score').val(data.min_score);
             }
         });
@@ -215,6 +221,10 @@
                 },
                 {
                     "data": "name"
+                },
+                {
+                    "data": "duration",
+                    "className": "text-center"
                 },
                 {
                     "data": "min_score",
