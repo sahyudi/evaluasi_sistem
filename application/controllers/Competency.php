@@ -193,4 +193,87 @@ class Competency extends CI_Controller
         $data = $this->db->get_where($this->unit_comp_detail, ['comp_unit_id' => $compId])->result();
         echo json_encode($data);
     }
+
+    function save_evaluasi()
+    {
+        $this->db->trans_begin();
+
+        $acknowled_by = $this->input->post('acknowled_by');
+        $asesor = $this->input->post('asesor');
+        $employee = $this->input->post('employee');
+        $date_com = $this->input->post('date_com');
+        $unit_competency = $this->input->post('unit_competency');
+
+        $bobot = $this->input->post('bobot');
+        $value = $this->input->post('value');
+        $sub_total = $this->input->post('sub_total');
+        $detail_criteria = $this->input->post('detail_criteria');
+
+        $competency = $this->db->get_where($this->unit_comptency, ['id' => $unit_competency])->row();
+
+        $expiry = date('Y-m-d', strtotime('+' . $competency->duration . ' year', strtotime($date_com)));
+
+        $license = [
+            'emp_id' => $employee,
+            'comp_id' => $unit_competency,
+            'comp_date' => $date_com,
+            'assesor' => $asesor,
+            'ack_by' => $acknowled_by,
+            'created_at' => date('Y-m-d H:i:s'),
+            'exp_date' => $expiry,
+            'score' => 0
+        ];
+
+        $this->db->insert('comp_license', $license);
+
+        $new_id = $this->db->insert_id();
+
+        $detail = [];
+        $score = 0;
+        for ($i = 0; $i < count($bobot); $i++) {
+            $detail[] = [
+                'comp_id' => $new_id,
+                'name' => $detail_criteria[$i],
+                'quality' => $bobot[$i],
+                'score' => $value[$i],
+                'note' => null
+            ];
+            $score += $sub_total[$i];
+        }
+
+        $this->db->insert_batch('comp_license_criteria', $detail);
+
+
+        // $this->db->set('score', $score);
+        $this->db->update('comp_license', ['score' => $score], ['id' => $new_id]);
+
+        if ($this->db->trans_status() == FALSE) {
+            $this->db->trans_rollback();
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed evaluation, please check connection</div>');
+        } else {
+            $this->db->trans_commit();
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Successfull evaluation!</div>');
+        }
+
+        redirect('competency/license');
+    }
+
+    function testTanggal()
+    {
+        $expiry = date('Y-m-d', strtotime('2 year', strtotime(date('Y-m-d'))));
+        log_r($expiry);
+    }
+
+    function deleteLicense()
+    {
+        $id = $this->input->post('id');
+
+        if ($this->db->delete('comp_license', ['id' => $id])) {
+            $status = 1;
+        } else {
+            $status = 2;
+        }
+
+        echo json_encode(['status' => $status]);
+    }
 }

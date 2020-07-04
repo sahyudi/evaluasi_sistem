@@ -21,6 +21,17 @@
                                     <?php } ?>
                                 </select>
                             </div>
+
+                            <div class="form-group">
+                                <label for="asesor">Acknowled By</label>
+                                <select name="acknowled_by" id="acknowled_by" class="form-control select2" required>
+                                    <option value=""></option>
+                                    <option value="" disabled>:: Select One ::</option>
+                                    <?php foreach ($userAccess as $key => $ases) { ?>
+                                        <option value="<?= $ases->employee_id ?>"><?= $ases->full_name ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <label for="employee">Employee</label>
                                 <select name="employee" id="employee" class="form-control select2" required>
@@ -108,9 +119,10 @@
     </div>
 </main>
 
+
 <script>
     $(document).ready(function() {
-
+        $('.select2').select2();
     })
     $('#employee').change(function() {
         var employeeId = $(this).val();
@@ -151,12 +163,15 @@
                     unitData += `
                         <tr>
                             <td>${parseInt(index+1)}</td>
-                            <td>${unit.name}</td>
+                            <td>
+                            <textarea name="detail_criteria[]" style="display:none;">${unit.name}</textarea>
+                            ${unit.name}
+                            </td>
                             <td>
                                 <input type="text" style="background-color:white;" id="bobot-${index}" name="bobot[]" class="form-control" value="${unit.value_weight}" readonly>
                             </td>
                             <td>
-                                <select name="value[]" id="value-${index}" onchange="getSub(${index})" class="form-control" required>
+                                <select name="value[]" id="value-${index}" onchange="getSub(${index})" class="form-control select2" required>
                                     <option value="0">:: Select One ::</option>
                                     <option value="20">20</option>
                                     <option value="40">40</option>
@@ -181,26 +196,15 @@
     function getSub(index) {
         var sub_value = parseInt($('#value-' + index).val());
         var sub_bobot = parseInt($('#bobot-' + index).val());
-
         var sub_total = (sub_bobot / 100) * sub_value;
-        // console.log(sub_total);
-
-
         var item_select = 0;
-        $('#sub-' + index).val(sub_total);
 
-        // setTimeout(function() {
+
+        $('#sub-' + index).val(sub_total);
         $('[name="sub_total[]"]').each(function(i, value) {
             item_select = parseInt(item_select) + parseInt($(value).val());
 
         });
-        // }, 500);
-
-        console.log(item_select);
-        // setTimeout(function() {
         $('#total-all').html(item_select);
-        // }, 500)
-
-
     }
 </script>

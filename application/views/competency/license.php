@@ -142,7 +142,7 @@
                     "data": "comp_date"
                 },
                 {
-                    "data": "expiry_date"
+                    "data": "exp_date"
                 },
                 {
                     "data": "score"
@@ -151,7 +151,7 @@
                     "data": "id",
                     "render": function(data, type, oObj) {
                         var status = oObj['id'];
-                        var btnDelete = `<a href="" class="btn btn-delete"><i class="fas fa-fw fa-trash"></i></a>`;
+                        var btnDelete = `<a href="#" class="btn btn-delete" onclick="delete_data(${status})"><i class="fas fa-fw fa-trash"></i></a>`;
                         var btnPrint = `<a href="" class="btn btn-print"><i class="fas fa-fw fa-print"></i></a>`;
                         var btnCertif = `<a href="" class="btn btn-certif"><i class="fas fa-fw fa-file"></i></a>`;
                         return `<td class="text-center">${btnDelete} ${btnPrint} ${btnCertif}</right>`;
@@ -159,6 +159,54 @@
                 }
             ]
         })
+    }
+
+    function delete_data(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                execute_delete(id)
+            }
+        })
+    }
+
+    function execute_delete(id) {
+        $.ajax({
+            url: "<?= base_url() . 'competency/deleteLicense'; ?>",
+            async: false,
+            type: 'POST',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Your unit competency has been deleted',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Your unit comptency has failed to deleted',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+                get_license();
+            }
+        });
     }
 </script>
 <!-- /.content-wrapper -->
