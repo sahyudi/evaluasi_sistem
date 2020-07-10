@@ -47,7 +47,7 @@
                                 <input type="date" name="date_com" id="date_com" class="form-control" required>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 ">
                             <div class="card mb-3" style="max-width: 540px;">
                                 <div class="row no-gutters">
                                     <div class="col-md-4">
@@ -85,23 +85,14 @@
                                     <thead>
                                         <tr>
                                             <th width="30px" class="text-center">No</th>
-                                            <th width="60%">Criteria</th>
-                                            <th width="100px">Quality</th>
-                                            <th>Value</th>
-                                            <th width="10%">Total</th>
+                                            <th width="40%">Performance Criteria</th>
+                                            <th width="20%">Status</th>
+                                            <th>Remark</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        
                                     </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th colspan="2" class="text-center">Total</th>
-                                            <th id="total-bobot"></th>
-                                            <th></th>
-                                            <th id="total-all" class="text-center"></th>
-                                        </tr>
-                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -168,26 +159,18 @@
                             ${unit.name}
                             </td>
                             <td>
-                                <input type="text" style="background-color:white;" id="bobot-${index}" name="bobot[]" class="form-control" value="${unit.value_weight}" readonly>
-                            </td>
-                            <td>
-                                <select name="value[]" id="value-${index}" onchange="getSub(${index})" class="form-control select2" required>
-                                    <option value="0">:: Select One ::</option>
-                                    <option value="20">20</option>
-                                    <option value="40">40</option>
-                                    <option value="60">60</option>
-                                    <option value="80">80</option>
-                                    <option value="100">100</option>
+                            <select name="status[]" id="status-${index}"  class="form-control select2" required>
+                                    <option default>:: Select One ::</option>
+                                    <option value="1">Passed</option>
+                                    <option value="0">Failed</option>
                                 </select>
                             </td>
                             <td>
-                                <input type="text" id="sub-${index}" name="sub_total[]" style="background-color:white;" class="form-control" value="0" readonly>
+                                <textarea type="text" id="remark-${index}" name="remark[]" style="background-color:white;" class="form-control" value="0"></textarea>
                             </td>
                         </tr>
                     `;
-                    totalBobot += parseInt(unit.value_weight);
                 });
-                $('#total-bobot').html(totalBobot + ' %');
                 $('#criteria tbody').append(unitData);
             }
         });

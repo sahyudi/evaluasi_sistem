@@ -207,6 +207,7 @@
 
     function reset_form() {
         $('#form-employee')[0].reset();
+        $('#id').val('');
         $('.select2').select2('val', 's');
     }
 

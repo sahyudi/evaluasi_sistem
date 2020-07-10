@@ -111,8 +111,7 @@ class Competency extends CI_Controller
     function get_detail_competency()
     {
         $id = $this->input->post('id');
-        $data = $this->competency_->get_unit_detail($id)->result();
-        echo json_encode($data);
+        echo $this->competency_->getJsonUniDetail($id);
     }
 
     function saveUnitDetailCompetency($id_comp_unit)
@@ -121,7 +120,7 @@ class Competency extends CI_Controller
         $data = [
             'comp_unit_id' => $id_comp_unit,
             'name' => $this->input->post('criteria'),
-            'value_weight' => $this->input->post('value_weight')
+            'is_active' => $this->input->post('is_active')
         ];
 
         if ($id) {
@@ -170,7 +169,7 @@ class Competency extends CI_Controller
         $data['UniComp'] = $this->competency_->getUnitComp()->result();
 
         $data['active'] = 'competency/form';
-        $data['title'] = 'Form EvaluationCompetency';
+        $data['title'] = 'Form Evaluation Competency';
         $data['subview'] = 'competency/form';
         $this->load->view('template/main', $data);
     }
@@ -196,6 +195,9 @@ class Competency extends CI_Controller
 
     function save_evaluasi()
     {
+
+        // log_r(count($this->input->post('remark')));
+
         $this->db->trans_begin();
 
         $acknowled_by = $this->input->post('acknowled_by');
@@ -204,10 +206,13 @@ class Competency extends CI_Controller
         $date_com = $this->input->post('date_com');
         $unit_competency = $this->input->post('unit_competency');
 
-        $bobot = $this->input->post('bobot');
-        $value = $this->input->post('value');
-        $sub_total = $this->input->post('sub_total');
+        // $bobot = $this->input->post('bobot');
+        // $value = $this->input->post('value');
+        // $sub_total = $this->input->post('sub_total');
         $detail_criteria = $this->input->post('detail_criteria');
+        $status = $this->input->post('status');
+        $remark = $this->input->post('remark');
+        // log_r($status[0]);
 
         $competency = $this->db->get_where($this->unit_comptency, ['id' => $unit_competency])->row();
 
@@ -228,24 +233,33 @@ class Competency extends CI_Controller
 
         $new_id = $this->db->insert_id();
 
+        $final = 0;
         $detail = [];
         $score = 0;
-        for ($i = 0; $i < count($bobot); $i++) {
+        for ($i = 0; $i < count($detail_criteria); $i++) {
             $detail[] = [
                 'comp_id' => $new_id,
                 'name' => $detail_criteria[$i],
-                'quality' => $bobot[$i],
-                'score' => $value[$i],
-                'note' => null
+                'status' => $status[$i],
+                'note' => $remark[$i],
+                // 'note' => null
             ];
-            $score += $sub_total[$i];
+            if ($status[$i] == 0) {
+                $final += 1;
+            }
         }
+
+        // log_r($detail);
 
         $this->db->insert_batch('comp_license_criteria', $detail);
 
-
+        if ($final > 0) {
+            $final_ = 'FAILED';
+        } else {
+            $final_ = 'PASSED';
+        }
         // $this->db->set('score', $score);
-        $this->db->update('comp_license', ['score' => $score], ['id' => $new_id]);
+        $this->db->update('comp_license', ['status' => $final_], ['id' => $new_id]);
 
         if ($this->db->trans_status() == FALSE) {
             $this->db->trans_rollback();
@@ -256,6 +270,15 @@ class Competency extends CI_Controller
         }
 
         redirect('competency/license');
+    }
+
+
+    function print($linceseId = null)
+    {
+        $data['competency'] = $this->competency_->getLicenseById($linceseId)->row();
+        $data['performance'] = $this->competency_->getPerforrmanceCriteria($linceseId)->result();
+        // log_r($data);
+        $this->load->view('competency/print', $data);
     }
 
     function testTanggal()

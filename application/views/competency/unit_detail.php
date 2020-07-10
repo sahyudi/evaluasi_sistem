@@ -12,37 +12,39 @@
             <div class="card-body">
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="">Unit Competency</label>
-                        <div class="form-control">
-                            <?= $competency->name ?>
-                        </div>
+                        <label for="">Unit Competency :</label>
+                        <!-- <div class="form-control"> -->
+                        <strong><?= $competency->name ?> </strong>
+                        <!-- </div> -->
                     </div>
-                    <div class="form-group col-md-6">
+                    <!-- <div class="form-group col-md-6">
                         <label for="">Minimal Score</label>
                         <div class="form-control">
                             <?= $competency->min_score ?>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="criteria-table">
                         <thead>
-                            <tr>
+                            <tr class="text-center">
+                                <th>No</th>
                                 <th>Criteria</th>
-                                <th>Value / Bobot (%)</th>
+                                <th>Status</th>
+                                <!-- <th>Value / Bobot (%)</th> -->
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
 
                         </tbody>
-                        <tfoot>
+                        <!-- <tfoot>
                             <tr>
                                 <th class="text-right">Max Value / Bobot</th>
                                 <th id="total-bobot"></th>
                                 <th></th>
                             </tr>
-                        </tfoot>
+                        </tfoot> -->
                     </table>
                 </div>
             </div>
@@ -66,10 +68,15 @@
                         <label for="exampleInputEmail1">Criteria</label>
                         <input type="text" name="criteria" id="criteria" class="form-control form-control-sm" placeholder="Criteria">
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="exampleInputPassword1">Value / Bobot (%)</label>
                         <input type="number" name="value_weight" id="value_weight" class="form-control form-control-sm" placeholder="Value bobot">
-                    </div>
+                    </div> -->
+                    <select name="is_active" id="is_active" class="form-control">
+                        <option disabled>Select One</option>
+                        <option value="0">Non active</option>
+                        <option value="1">Active</option>
+                    </select>
                 </div>
             </form>
             <div class="modal-footer justify-content-between">
@@ -122,6 +129,7 @@
             success: function(data) {
                 $('#id').val(data.id);
                 $('#criteria').val(data.name);
+                $('#is_active').val(data.is_active);
                 $('#value_weight').val(data.value_weight);
             }
         });
@@ -191,40 +199,77 @@
         });
     }
 
+
+    function handleAjaxError(xhr, textStatus, error) {
+        if (textStatus === 'timeout') {
+            alert('The server took too long to send the data.');
+        } else {
+            alert('An error occurred on the server. Please try again in a minute.');
+        }
+    }
+
     function get_detail_competency() {
-
-        var unitData = [];
-        var totalBobot = 0;
-
-        $.ajax({
-            url: "<?= base_url() . 'competency/get_detail_competency'; ?>",
-            async: false,
-            type: 'POST',
-            data: {
-                id: Id
-            },
-            dataType: 'json',
-            success: function(data) {
-                // console.log(data);
-                $('tbody tr').remove()
-                $.each(data, function(index, unit) {
-                    // console.log(index)
-                    unitData += `
-                        <tr>
-                            <td>${unit.name}</td>
-                            <td>${unit.value_weight}</td>
-                            <td class="text-right">
-                                <a href="#"  data-toggle="modal" data-target="#modal-unit-comptency-detail" class="btn btn-sm btn-primary" onclick="edit_data('${unit.id}')"><i class="fas fa fa-pencil-alt"></i></a>
-                                <a href="#" class="btn btn-sm btn-danger" onclick="delete_data('${unit.id}')"><i class="fas fa fa-trash-alt"></i></a>
-                            </td>
-                        </tr>
-                    `;
-
-                    totalBobot += parseInt(unit.value_weight);
+        if (oTable) {
+            oTable.fnDestroy();
+        }
+        $('#criteria-table').dataTable().fnDestroy();
+        var oTable = $('#criteria-table').dataTable({
+            "bProcessing": true,
+            "bServerSide": true,
+            'searching': true,
+            'sAjaxSource': "<?= base_url('competency/get_detail_competency') ?>",
+            'fnServerData': function(sSource, aoData, fnCallback) {
+                aoData.push({
+                    "name": "id",
+                    "value": Id
                 });
-                $('#total-bobot').html(totalBobot + ' %');
-                $('#criteria-table tbody').append(unitData);
-            }
-        });
+                $.ajax({
+                    'dataType': 'json',
+                    'type': 'POST',
+                    'url': sSource,
+                    'data': aoData,
+                    'success': fnCallback,
+                    "error": handleAjaxError
+                });
+
+            },
+            'fnDrawCallback': function(oSettings) {
+                $('#modal-loading').modal('hide');
+            },
+            "columns": [{
+                    "data": null,
+                    "className": "text-center",
+                    render: function(data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    "data": "name"
+                },
+                {
+                    "data": "is_active",
+                    "className": "text-center",
+                    "render": function(data, type, obj) {
+                        if (obj['is_active'] == 1) {
+                            var status = `<span class="badge badge-success">Active</span>`
+                        } else {
+                            var status = `<span class="badge badge-danger">Non active</span>`
+                        }
+
+                        return status;
+                    }
+                },
+                {
+                    "data": "id",
+                    "className": "text-center",
+                    "render": function(data, type, oObj) {
+                        var id = oObj['id'];
+                        var btnDelete = `<a href="#" class="btn btn-sm btn-danger" onclick="delete_data('${id}')"><i class="fas fa fa-trash-alt"></i></a>`;
+                        var btnEdit = `<a href="#"  data-toggle="modal" data-target="#modal-unit-comptency-detail" class="btn btn-sm btn-primary" onclick="edit_data('${id}')"><i class="fas fa fa-pencil-alt"></i></a>`;
+                        return `<td class="text-center">${btnDelete} ${btnEdit} </right>`;
+                    }
+                }
+            ]
+        })
     }
 </script>

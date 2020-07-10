@@ -9,7 +9,6 @@
             <div class="card-header">
                 <i class="fas fa-table mr-1"></i>
                 Data License
-                <a href="#" class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#modal-menu"><i class="fas fa-fw fa-plus"></i> Add Menu</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -37,50 +36,6 @@
     </div>
 </main>
 
-<div class="modal fade" id="modal-menu">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Menu</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="<?= base_url('setting/add_menu') ?>" id="form-menu" method="post" enctype="multipart/form-data">
-                <input type="hidden" id="id" name="id">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="">Parent Menu</label>
-                        <select name="parent" id="parent" class="form-control form-control-sm select2">
-                            <option value="0" selected>Parent ID</option>
-                            <?php foreach ($parent as $key => $value) { ?>
-                                <option value="<?= $value->id ?>"><?= $value->title ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Title</label>
-                        <input type="text" name="title" id="title" class="form-control form-control-sm" placeholder="title menu">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Url Menu</label>
-                        <input type="text" name="link" id="link" class="form-control form-control-sm" placeholder="Url ..">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Icon Menu</label>
-                        <input name="icon" id="icon" class="form-control form-control-sm" placeholder="Icon Menu ...">
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary btn-sm">Save changes</button>
-                </div>
-            </form>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
 <script>
     $(document).ready(function() {
         // $(".table").DataTable();
@@ -145,14 +100,14 @@
                     "data": "exp_date"
                 },
                 {
-                    "data": "score"
+                    "data": "status"
                 },
                 {
                     "data": "id",
                     "render": function(data, type, oObj) {
-                        var status = oObj['id'];
-                        var btnDelete = `<a href="#" class="btn btn-delete" onclick="delete_data(${status})"><i class="fas fa-fw fa-trash"></i></a>`;
-                        var btnPrint = `<a href="" class="btn btn-print"><i class="fas fa-fw fa-print"></i></a>`;
+                        var id = oObj['id'];
+                        var btnDelete = `<a href="#" class="btn btn-delete" onclick="delete_data(${id})"><i class="fas fa-fw fa-trash"></i></a>`;
+                        var btnPrint = `<a href="<?= base_url('competency/print/') ?>${id}" class="btn btn-print"><i class="fas fa-fw fa-print"></i></a>`;
                         var btnCertif = `<a href="" class="btn btn-certif"><i class="fas fa-fw fa-file"></i></a>`;
                         return `<td class="text-center">${btnDelete} ${btnPrint} ${btnCertif}</right>`;
                     }
