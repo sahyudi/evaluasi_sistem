@@ -104,10 +104,8 @@ class Setting extends CI_Controller
             $data = [
                 'name' => htmlspecialchars($this->input->post('name', true)),
                 'email' => htmlspecialchars($this->input->post('email', true)),
-                'image' => 'default.jpg',
                 'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                 'group_id' => $this->input->post('group'),
-                'outlet_id' => 1,
                 'is_active' => 1,
                 'created_at' => date('Y-m-d H:i:s')
             ];
@@ -135,12 +133,30 @@ class Setting extends CI_Controller
     {
         check_persmission_pages($this->session->userdata('group_id'), 'setting/group');
 
-        $data['groups'] = $this->m_setting->get_group()->result();
+        // $data['groups'] = $this->m_setting->get_group()->result();
 
         $data['active'] = 'setting/group';
         $data['title'] = 'User Groups';
         $data['subview'] = 'setting/group';
         $this->load->view('template/main', $data);
+    }
+
+    function getGroupJson()
+    {
+        echo $this->m_setting->getGroupJson();
+    }
+
+    function deleteGroup()
+    {
+        $id = $this->input->post('id');
+
+        if ($this->db->delete('groups', ['id' => $id])) {
+            $status = 1;
+        } else {
+            $status = 2;
+        }
+
+        echo json_encode(['status' => $status]);
     }
 
     function get_group($id)

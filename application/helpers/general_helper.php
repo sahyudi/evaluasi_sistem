@@ -136,3 +136,19 @@ function replace_angka($angka)
 {
     return str_replace(",", "", $angka);
 }
+
+function sendTelegram($msg, $idtelegram = null)
+{
+
+    $telegrambot = '1339444719:AAFQ2afMNcZpfZNro7PvDdjmwjx1B_90lNk';
+    $telegramchatid = 384920975;
+
+    $url = 'https://api.telegram.org/bot' . $telegrambot . '/sendMessage';
+    $data = array('chat_id' => $telegramchatid, 'text' => $msg);
+    $options = array('http' => array('method' => 'POST', 'header' => "Content-Type:application/x-www-form-urlencoded\r\n", 'content' => http_build_query($data),),);
+
+    $context = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+
+    return $result;
+}

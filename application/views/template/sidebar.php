@@ -14,6 +14,7 @@
                         <?php
                         $this->db->select('A.*');
                         $this->db->join('user_access_role B', 'A.id = B.menu_id');
+                        $this->db->where('B.group_id', $this->session->userdata('group_id'));
                         $menu_load = $this->db->get_where('menus A', ['A.head_id' => $value->id])->result();
                         // log_r($menu_load);
                         ?>

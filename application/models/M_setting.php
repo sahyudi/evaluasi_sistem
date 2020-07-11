@@ -6,6 +6,7 @@ class M_setting extends CI_Model
     function __construct()
     {
         parent::__construct();
+        $this->load->library('datatables');
     }
 
     public function get_menu($id = null)
@@ -30,6 +31,13 @@ class M_setting extends CI_Model
         // $this->db->order_by('A.parent_id');
         $menu = $this->db->get();
         return $menu;
+    }
+
+    function getGroupJson()
+    {
+        $this->datatables->select('group_name, id');
+        $this->datatables->from('groups');
+        return $this->datatables->generate();
     }
 
     function get_parent_menu()
