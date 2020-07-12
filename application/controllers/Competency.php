@@ -195,9 +195,6 @@ class Competency extends CI_Controller
 
     function save_evaluasi()
     {
-
-        // log_r(count($this->input->post('remark')));
-
         $this->db->trans_begin();
 
         $acknowled_by = $this->input->post('acknowled_by');
@@ -206,16 +203,12 @@ class Competency extends CI_Controller
         $date_com = $this->input->post('date_com');
         $unit_competency = $this->input->post('unit_competency');
 
-        // $bobot = $this->input->post('bobot');
-        // $value = $this->input->post('value');
-        // $sub_total = $this->input->post('sub_total');
+
         $detail_criteria = $this->input->post('detail_criteria');
         $status = $this->input->post('status');
         $remark = $this->input->post('remark');
-        // log_r($status[0]);
 
         $competency = $this->db->get_where($this->unit_comptency, ['id' => $unit_competency])->row();
-
 
         $license = [
             'emp_id' => $employee,
@@ -241,14 +234,11 @@ class Competency extends CI_Controller
                 'name' => $detail_criteria[$i],
                 'status' => $status[$i],
                 'note' => $remark[$i],
-                // 'note' => null
             ];
             if ($status[$i] == 0) {
                 $final += 1;
             }
         }
-
-        // log_r($detail);
 
         $this->db->insert_batch('comp_license_criteria', $detail);
 
@@ -259,7 +249,7 @@ class Competency extends CI_Controller
             $final_ = 'PASSED';
             $expiry = date('Y-m-d', strtotime('+' . $competency->duration . ' year', strtotime($date_com)));
         }
-        // $this->db->set('score', $score);
+
         $update = [
             'exp_date' => $final_,
             'status' => $final_
@@ -282,15 +272,9 @@ class Competency extends CI_Controller
     {
         $data['competency'] = $this->competency_->getLicenseById($linceseId)->row();
         $data['performance'] = $this->competency_->getPerforrmanceCriteria($linceseId)->result();
-        // log_r($data);
         $this->load->view('competency/print', $data);
     }
 
-    function testTanggal()
-    {
-        $expiry = date('Y-m-d', strtotime('2 year', strtotime(date('Y-m-d'))));
-        log_r($expiry);
-    }
 
     function deleteLicense()
     {
@@ -310,7 +294,7 @@ class Competency extends CI_Controller
     {
 
         // $msg = 'Pesan kosong';
-        $array_nik = array(); // tampung per nik (DISTINCT)
+        $store_empId = array(); // tampung per nik (DISTINCT)
         $array_content = array();
         $array_tg_id = array();
 
@@ -323,40 +307,30 @@ class Competency extends CI_Controller
 
         foreach ($master as $key => $value) {
 
-            // $data = date('Y-m-d', strtotime('-3month', strtotime($end->ex_date)));
-            $nik = $value->emp_id;
-            // $status = $end->status;
-            $telegram_id = $value->telegram_id;
-
-            // if ($data <= $data2 && $status == 'PASSED') {
-            if (!in_array($nik, $array_nik)) {
-                // cek nik yang mulainya dengan 0
-                $array_nik[] = $nik;
-                $array_tg_id[strval($nik)] = $telegram_id;
+            if (!in_array($value->emp_id, $store_empId)) {
+                $store_empId[] = $value->emp_id;
+                $array_tg_id[strval($value->emp_id)] = $value->telegram_id;
             }
 
             $msg = $value->license . " expiry pada : " . date("d M Y", strtotime(@$value->exp_date)) . "\n";
-
-            if (empty($array_content[strval($nik)])) {
-                $array_content[strval($nik)] = $msg;
+            if (empty($array_content[strval($value->emp_id)])) {
+                $array_content[strval($value->emp_id)] = $msg;
             } else {
-                $array_content[strval($nik)] .= $msg;
+                $array_content[strval($value->emp_id)] .= $msg;
             }
-            $penutup = "SEGERA LAKUKAN PERPANJANGAN YA!!! \n";
-            $penutup .= "Jika tidak dilakukan perpanjangan kompetensi sobat akan expired.Silahkan menghubungi Training Center di Ext. 108 atau 118 untuk melakukan perpanjangan. \n";
-            $penutup .= "Sukses Selalu!!";
-
-            $kirim = $pembuka . "\n" . $array_content[strval($nik)] . "\n" . $penutup;
-            // }
         }
 
-        // log_r($kirim);
-        // PENGIRIMAN TELEGRAM
-        // for ($i = 0; $i < sizeof($array_nik); $i++) {
-        sendTelegram($kirim);
-        // }
+        // log_r($array_content);
+        $penutup = "SEGERA LAKUKAN PERPANJANGAN YA!!! \n";
+        $penutup .= "Jika tidak dilakukan perpanjangan kompetensi sobat akan expired.Silahkan menghubungi Training Center di Ext. 108 atau 118 untuk melakukan perpanjangan. \n";
+        $penutup .= "Sukses Selalu!!";
 
-        // $this->view_data();
+        for ($i = 0; $i < sizeof($store_empId); $i++) {
+            $kirim = $pembuka . "\n" . $array_content[$store_empId[$i]] . "\n" . $penutup;
+            sendTelegram($kirim, $array_tg_id[$i]);
+        }
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Successfull send notification!</div>');
         redirect('competency/license');
     }
 }

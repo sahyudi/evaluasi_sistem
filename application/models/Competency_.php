@@ -48,8 +48,8 @@ class Competency_ extends CI_Model
         $this->db->where('A.status', 'PASSED');
         $this->db->where('A.exp_date <=  DATE_ADD(NOW(), INTERVAL 1 MONTH)');
         $this->db->group_by('A.comp_id, A.emp_id');
+        $this->db->order_by('emp_id', 'ASC');
         return $this->db->get('comp_license A');
-        // exp_date <=  DATE_ADD(NOW(), INTERVAL 1 MONTH)
     }
 
     function getPerforrmanceCriteria($licenseId)
