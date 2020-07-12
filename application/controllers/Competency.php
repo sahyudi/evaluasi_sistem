@@ -298,11 +298,6 @@ class Competency extends CI_Controller
         $array_content = array();
         $array_tg_id = array();
 
-
-        $pembuka = "Hi Sobat !!!! \n";
-        $pembuka .= "License Alert \n \n";
-        $pembuka .= "Jangan lupa Kompetensi sobat akan habis masa berlakunya. \n";
-
         $master = $this->competency_->getNotifLicense()->result();
 
         foreach ($master as $key => $value) {
@@ -320,7 +315,10 @@ class Competency extends CI_Controller
             }
         }
 
-        // log_r($array_content);
+        $pembuka = "Hi Sobat !!!! \n";
+        $pembuka .= "License Alert \n \n";
+        $pembuka .= "Jangan lupa Kompetensi sobat akan habis masa berlakunya. \n";
+
         $penutup = "SEGERA LAKUKAN PERPANJANGAN YA!!! \n";
         $penutup .= "Jika tidak dilakukan perpanjangan kompetensi sobat akan expired.Silahkan menghubungi Training Center di Ext. 108 atau 118 untuk melakukan perpanjangan. \n";
         $penutup .= "Sukses Selalu!!";
@@ -332,5 +330,10 @@ class Competency extends CI_Controller
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Successfull send notification!</div>');
         redirect('competency/license');
+    }
+
+    function test_view()
+    {
+        $this->load->view('test.php');
     }
 }

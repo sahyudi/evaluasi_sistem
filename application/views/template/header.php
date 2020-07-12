@@ -9,12 +9,14 @@
     <meta name="author" content="" />
     <title><?= $title ?> - Evaluasi</title>
     <link rel="icon" href="fav/icon" type="image/gif" sizes="16x16">
+
     <link href="<?= base_url() ?>assets/dist/css/styles.css" rel="stylesheet" />
     <link href="<?= base_url() ?>assets/dist/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+
     <script src="<?= base_url() ?>assets/dist/js/all.min.js" crossorigin="anonymous"></script>
     <script src="<?= base_url() ?>assets/dist/js/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
     <script src="<?= base_url() ?>assets/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="<?= base_url() ?>assets/dist/js/scripts.js"></script>
     <script src="<?= base_url() ?>assets/dist/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="<?= base_url() ?>assets/dist/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
     <script src="<?= base_url() ?>assets/dist/assets/demo/datatables-demo.js"></script>

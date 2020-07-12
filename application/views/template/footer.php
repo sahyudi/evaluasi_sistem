@@ -12,6 +12,8 @@
 </footer>
 </div>
 </div>
+<script src="<?= base_url() ?>assets/dist/js/scripts.js"></script>
+
 </body>
 
 </html>
