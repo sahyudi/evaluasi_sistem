@@ -13,12 +13,18 @@ class Competency_ extends CI_Model
 
     public function get_license($id = null)
     {
+        $limit = $this->input->post('limit');
+
         $this->datatables->select('A.id, A.score, A.status, A.comp_date, A.exp_date, C.full_name as employee, B.name as lincense, D.full_name as assesor, F.full_name as ack_by, ');
         $this->datatables->join('comp_unit B', 'A.comp_id = B.id');
         $this->datatables->join('employee C', 'A.emp_id = C.id');
         $this->datatables->join('employee D', 'A.assesor = D.id');
         $this->datatables->join('employee F', 'A.ack_by = F.id');
         $this->datatables->from('comp_license A');
+
+        if ($limit) {
+            $this->db->limit($limit);
+        }
         return $this->datatables->generate();
     }
 
@@ -41,7 +47,7 @@ class Competency_ extends CI_Model
         $this->db->join('employee C', 'A.emp_id = C.id');
         $this->db->where('A.status', 'PASSED');
         $this->db->where('A.exp_date <=  DATE_ADD(NOW(), INTERVAL 1 MONTH)');
-        $this->db->group_by('');
+        $this->db->group_by('A.comp_id, A.emp_id');
         return $this->db->get('comp_license A');
         // exp_date <=  DATE_ADD(NOW(), INTERVAL 1 MONTH)
     }
@@ -58,9 +64,20 @@ class Competency_ extends CI_Model
         return $this->datatables->generate();
     }
 
-    function getUnitCompetency($id)
+    function getUnitCompetency($id = null)
     {
-        return $this->db->get_where('comp_unit', ['id' => $id]);
+        if ($id) {
+            $this->db->where('id', $id);
+        }
+        return $this->db->get('comp_unit');
+    }
+
+    function getLicense($id = null)
+    {
+        if ($id) {
+            $this->db->where('id', $id);
+        }
+        return $this->db->get('comp_license');
     }
 
     function get_unit_detail($id = null)

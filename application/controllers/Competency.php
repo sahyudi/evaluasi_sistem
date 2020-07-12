@@ -216,7 +216,6 @@ class Competency extends CI_Controller
 
         $competency = $this->db->get_where($this->unit_comptency, ['id' => $unit_competency])->row();
 
-        $expiry = date('Y-m-d', strtotime('+' . $competency->duration . ' year', strtotime($date_com)));
 
         $license = [
             'emp_id' => $employee,
@@ -225,7 +224,7 @@ class Competency extends CI_Controller
             'assesor' => $asesor,
             'ack_by' => $acknowled_by,
             'created_at' => date('Y-m-d H:i:s'),
-            'exp_date' => $expiry,
+            'exp_date' => 'null',
             'score' => 0
         ];
 
@@ -255,11 +254,17 @@ class Competency extends CI_Controller
 
         if ($final > 0) {
             $final_ = 'FAILED';
+            $expiry = $date_com;
         } else {
             $final_ = 'PASSED';
+            $expiry = date('Y-m-d', strtotime('+' . $competency->duration . ' year', strtotime($date_com)));
         }
         // $this->db->set('score', $score);
-        $this->db->update('comp_license', ['status' => $final_], ['id' => $new_id]);
+        $update = [
+            'exp_date' => $final_,
+            'status' => $final_
+        ];
+        $this->db->update('comp_license', $update, ['id' => $new_id]);
 
         if ($this->db->trans_status() == FALSE) {
             $this->db->trans_rollback();

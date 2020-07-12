@@ -16,14 +16,13 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr class="text-center">
-                                <!-- <th>No</th> -->
                                 <th>Nama</th>
                                 <th>Uni Competency</th>
                                 <th>Assesor</th>
                                 <th>Acknoledge</th>
                                 <th>Date</th>
                                 <th>Expiry Date</th>
-                                <th>Score</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
