@@ -17,7 +17,6 @@
                         <!-- Loop menu -->
                         <tr>
                             <th>Menu</th>
-                            <th colspan="3">Actions</th>
                         </tr>
                         <?php foreach ($menu as $key => $value_menu) { ?>
                             <?php if ($value_menu->parent_id == 0) { ?>
@@ -29,10 +28,7 @@
                                     <?php if ($submenu->parent_id == $value_menu->id) { ?>
                                         <tr class="m-3" style="margin-left:10%;">
                                             <td><input class="ml-5" type="checkbox" id="checkbox-<?= $submenu->id; ?>" name="menu[]" value="<?= $submenu->id ?>" <?= check_menu($group_id, $submenu->id) ?>> <?= $submenu->title; ?></td>
-                                            <td><input class="ml-5" type="checkbox" id="read" name="menu_akses[]" value="read"> Read</td>
-                                            <td><input class="ml-5" type="checkbox" id="delete" name="menu_akses[]" value="delete"> Delete</td>
-                                            <td><input class="ml-5" type="checkbox" id="update" name="menu_akses[]" value="update"> Update</td>
-                                        </tr>
+                                          </tr>
                                     <?php } ?>
                                 <?php } ?>
                             <?php } ?>

@@ -207,22 +207,24 @@ class Setting extends CI_Controller
         $menu_akses = $this->input->post('menu_akses');
 
         $data_menu = [];
-        foreach ($menu as $key => $value) {
-            $data_menu[] = [
-                'group_id' => $group_id,
-                'menu_id' => $value
-            ];
-        }
-        $this->db->trans_begin();
+        if ($menu) {
+            foreach ($menu as $key => $value) {
+                $data_menu[] = [
+                    'group_id' => $group_id,
+                    'menu_id' => $value
+                ];
+            }
+            $this->db->trans_begin();
 
-        $this->db->delete('user_access_role', ['group_id' => $group_id]);
-        $this->db->insert_batch('user_access_role', $data_menu);
-        if ($this->db->trans_status() === FALSE) {
-            $this->db->trans_rollback();
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> User role gagal disimpan !</div>');
-        } else {
-            $this->db->trans_commit();
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> User role berhasil disimpan !</div>');
+            $this->db->delete('user_access_role', ['group_id' => $group_id]);
+            $this->db->insert_batch('user_access_role', $data_menu);
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> User role gagal disimpan !</div>');
+            } else {
+                $this->db->trans_commit();
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> User role berhasil disimpan !</div>');
+            }
         }
         redirect('setting/group');
     }

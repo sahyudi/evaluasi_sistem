@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col-md-3"></div>
                         <div class="input-group col-md-6">
-                            <input class="form-control" type="text" name="nip" placeholder="insert nip for..." aria-label="Search" aria-describedby="basic-addon2" />
+                            <input class="form-control" type="text" name="nip" value="<?= $this->input->get('nip') ?>" placeholder="insert nip for..." aria-label="Search" aria-describedby="basic-addon2" />
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
                             </div>
@@ -57,6 +57,7 @@
                             </div>
                         </div>
                     <?php } ?>
+                        
                 </form>
             </div>
         </div>
