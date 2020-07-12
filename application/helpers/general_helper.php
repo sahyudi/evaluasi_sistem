@@ -140,10 +140,9 @@ function replace_angka($angka)
 function sendTelegram($msg, $idtelegram = null)
 {
 
-    $telegrambot = '';
     $telegramchatid = 384920975;
 
-    $url = 'https://api.telegram.org/bot' . $telegrambot . '/sendMessage';
+    $url = 'https://api.telegram.org/bot' . API_TELGERAM . '/sendMessage';
     $data = array('chat_id' => $telegramchatid, 'text' => $msg);
     $options = array('http' => array('method' => 'POST', 'header' => "Content-Type:application/x-www-form-urlencoded\r\n", 'content' => http_build_query($data),),);
 
