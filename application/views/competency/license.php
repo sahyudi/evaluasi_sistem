@@ -9,6 +9,7 @@
             <div class="card-header">
                 <i class="fas fa-table mr-1"></i>
                 Data License
+                <a href="<?= base_url('competency/send_notif_telegram') ?>" class="btn btn-sm btn-info float-right"><i class="fab fa-telegram"></i> Send Notif</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -100,7 +101,14 @@
                     "data": "exp_date"
                 },
                 {
-                    "data": "status"
+                    "data": "status",
+                    "render": function(data, type, obj) {
+                        if (obj['status'] == "PASSED") {
+                            return `<span class="badge badge-success">${obj['status']}</span>`
+                        } else {
+                            return `<span class="badge badge-danger">${obj['status']}</span>`
+                        }
+                    }
                 },
                 {
                     "data": "id",

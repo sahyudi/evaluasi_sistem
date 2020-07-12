@@ -36,11 +36,12 @@ class Competency_ extends CI_Model
 
     function getNotifLicense()
     {
-        $this->db->select('A.exp_date, B.name as lincense, A.emp_id, B.telegram_id');
+        $this->db->select('A.exp_date, B.name as license, A.emp_id, C.telegram_id');
         $this->db->join('comp_unit B', 'A.comp_id = B.id');
         $this->db->join('employee C', 'A.emp_id = C.id');
         $this->db->where('A.status', 'PASSED');
         $this->db->where('A.exp_date <=  DATE_ADD(NOW(), INTERVAL 1 MONTH)');
+        $this->db->group_by('');
         return $this->db->get('comp_license A');
         // exp_date <=  DATE_ADD(NOW(), INTERVAL 1 MONTH)
     }

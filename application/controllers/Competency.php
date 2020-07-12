@@ -303,59 +303,53 @@ class Competency extends CI_Controller
 
     function send_notif_telegram()
     {
-        $tl = [];
 
-        $link = 'http://localhost/hr_program/evalys/index.php/home';
-
-        $data2 = date('Y-m-d');
-        $kirim = 'test';
         // $msg = 'Pesan kosong';
         $array_nik = array(); // tampung per nik (DISTINCT)
         $array_content = array();
         $array_tg_id = array();
 
 
-        $pembuka = `Hi Sobat !!!! \n`;
-        $pembuka .= `strval  Saya MyLicense \n \n`;
-        $pembuka .= `Jangan lupa Kompetensi sobat akan habis masa berlakunya. \n`;
+        $pembuka = "Hi Sobat !!!! \n";
+        $pembuka .= "License Alert \n \n";
+        $pembuka .= "Jangan lupa Kompetensi sobat akan habis masa berlakunya. \n";
 
-$master = $this->competency_->getNotifLicense()->result();
+        $master = $this->competency_->getNotifLicense()->result();
 
-        foreach ($tl as $end) {
-            $data = date('Y-m-d', strtotime('-3month', strtotime($end->ex_date)));
-            $nik = $end->user_id;
-            $status = $end->status;
-            $telegram_id = $end->telegram_id;
+        foreach ($master as $key => $value) {
 
-            if ($data <= $data2 && $status == 'PASSED') {
-                if (!in_array($nik, $array_nik)) {
-                    // cek nik yang mulainya dengan 0
-                    $array_nik[] = $nik;
-                    $array_tg_id[strval($nik)] = $telegram_id;
-                }
+            // $data = date('Y-m-d', strtotime('-3month', strtotime($end->ex_date)));
+            $nik = $value->emp_id;
+            // $status = $end->status;
+            $telegram_id = $value->telegram_id;
 
-                $msg = $end->ojt_name . " expiry pada : \n" . date("d M Y", strtotime($end->ex_date) . "\n");
-
-                if (empty($array_content[strval($nik)])) {
-                    $array_content[strval($nik)] = $msg;
-                } else {
-                    $array_content[strval($nik)] .= $msg;
-                }
-                $penutup = "SEGERA LAKUKAN PERPANJANGAN YA!!! \n
-							Jika tidak dilakukan perpanjangan kompetensi sobat akan expired.
-							Silahkan menghubungi Training Center di Ext. 108 atau 118
-							untuk melakukan perpanjangan. \n
-
-							Sukses Selalu!!";
-                $kirim = $pembuka . "\n" . $array_content[strval($nik)] . "\n" . $penutup;
+            // if ($data <= $data2 && $status == 'PASSED') {
+            if (!in_array($nik, $array_nik)) {
+                // cek nik yang mulainya dengan 0
+                $array_nik[] = $nik;
+                $array_tg_id[strval($nik)] = $telegram_id;
             }
+
+            $msg = $value->license . " expiry pada : " . date("d M Y", strtotime(@$value->exp_date)) . "\n";
+
+            if (empty($array_content[strval($nik)])) {
+                $array_content[strval($nik)] = $msg;
+            } else {
+                $array_content[strval($nik)] .= $msg;
+            }
+            $penutup = "SEGERA LAKUKAN PERPANJANGAN YA!!! \n";
+            $penutup .= "Jika tidak dilakukan perpanjangan kompetensi sobat akan expired.Silahkan menghubungi Training Center di Ext. 108 atau 118 untuk melakukan perpanjangan. \n";
+            $penutup .= "Sukses Selalu!!";
+
+            $kirim = $pembuka . "\n" . $array_content[strval($nik)] . "\n" . $penutup;
+            // }
         }
 
+        // log_r($kirim);
         // PENGIRIMAN TELEGRAM
         // for ($i = 0; $i < sizeof($array_nik); $i++) {
-        //     sendTelegram($kirim);
-        // }
         sendTelegram($kirim);
+        // }
 
         // $this->view_data();
         redirect('competency/license');

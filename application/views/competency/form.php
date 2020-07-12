@@ -16,8 +16,11 @@
                                 <select name="asesor" id="asesor" class="form-control select2" required>
                                     <option value=""></option>
                                     <option value="" disabled>:: Select One ::</option>
-                                    <?php foreach ($userAccess as $key => $ases) { ?>
+                                    <!-- <?php foreach ($userAccess as $key => $ases) { ?>
                                         <option value="<?= $ases->employee_id ?>"><?= $ases->full_name ?></option>
+                                    <?php } ?> -->
+                                    <?php foreach ($employee as $key => $emp) { ?>
+                                        <option value="<?= $emp->id ?>"><?= $emp->full_name ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -27,8 +30,11 @@
                                 <select name="acknowled_by" id="acknowled_by" class="form-control select2" required>
                                     <option value=""></option>
                                     <option value="" disabled>:: Select One ::</option>
-                                    <?php foreach ($userAccess as $key => $ases) { ?>
+                                    <!-- <?php foreach ($userAccess as $key => $ases) { ?>
                                         <option value="<?= $ases->employee_id ?>"><?= $ases->full_name ?></option>
+                                    <?php } ?> -->
+                                    <?php foreach ($employee as $key => $emp) { ?>
+                                        <option value="<?= $emp->id ?>"><?= $emp->full_name ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -91,7 +97,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
