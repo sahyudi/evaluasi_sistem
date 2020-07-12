@@ -12,7 +12,7 @@
     <script src="<?= base_url() ?>assets/dist/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="bg-primary">
+<body>
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
@@ -46,7 +46,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                            <a class="small" href="#">Forgot Password?</a>
+                                            <a class="small" href="<?= base_url('information') ?>">Information License ?</a>
                                             <button class="btn btn-primary" type="submit">Login</button>
                                         </div>
                                     </form>
@@ -59,20 +59,6 @@
                     </div>
                 </div>
             </main>
-        </div>
-        <div id="layoutAuthentication_footer">
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2020</div>
-                        <div>
-                            <a href="http://sahyudi.space/">Sahyudi</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
     </div>
     <script src="<?= base_url() ?>assets/dist/js/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
